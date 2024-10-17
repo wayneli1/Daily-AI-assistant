@@ -2,26 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes scroll {
+    0% {
+      transform: translateX(100%); /* 从最右边开始 */
+    }
+    100% {
+      transform: translateX(-100%); /* 移动到最左边 */
+    }
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  
+  .animate-scroll {
+    animation: scroll 20s linear infinite; /* 20秒完成一次滚动，线性无限循环 */
+    display: inline-flex;
+    white-space: nowrap; /* 保证内容不会自动换行 */
   }
-}
+  
+  
