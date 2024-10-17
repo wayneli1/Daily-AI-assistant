@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [userAccount, setUserAccount] = useState(''); // 改为 userAccount
+    const [userPassword, setUserPassword] = useState(''); // 改为 userPassword
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState('');
     const router = useRouter();
@@ -17,27 +17,25 @@ const Login = () => {
         e.preventDefault(); // 阻止表单的默认提交
 
         // 构建请求体
-        const data = { username, password };
+        const data = { userAccount, userPassword }; // 使用新的字段名
 
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('http://localhost:8101/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data), // 将用户凭证发送到后端
             });
-
+    
             const result = await response.json();
-
-            if (response.ok) {
-                // 登录成功，将 JWT 存储到 localStorage
-                localStorage.setItem('token', result.token);
-                
-                // 重定向到 dashboard 页面
+    
+            // 假设后端返回 { "status": "success" } 表示登录成功
+            if (response.ok && result.status === 'success') {
+                // 登录成功，重定向到 dashboard 页面
                 router.push('/dashboard');
             } else {
-                // 处理错误
+                // 登录失败，显示错误信息
                 setMessage(result.message || 'Login failed');
             }
         } catch (error) {
@@ -56,8 +54,8 @@ const Login = () => {
                         <input 
                             type="text" 
                             placeholder="Username" 
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={userAccount}
+                            onChange={(e) => setUserAccount(e.target.value)} // 改为 setUserAccount
                             className="w-full px-4 py-2 rounded-md bg-white bg-opacity-20 text-white placeholder-white::placeholder focus:outline-none focus:ring-2 focus:ring-white" 
                         />
                     </div>
@@ -65,8 +63,8 @@ const Login = () => {
                         <input 
                             type={showPassword ? "text" : "password"} 
                             placeholder="Password" 
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={userPassword}
+                            onChange={(e) => setUserPassword(e.target.value)} // 改为 setUserPassword
                             className="w-full px-4 py-2 rounded-md bg-white bg-opacity-20 text-white placeholder-white::placeholder focus:outline-none focus:ring-2 focus:ring-white" 
                         />
                         <span 
