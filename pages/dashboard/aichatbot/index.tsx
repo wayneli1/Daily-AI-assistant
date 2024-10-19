@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
+import Aichat from '@/components/Dashboard/Aichat'
 
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <Aichat/>
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
+import Automeall from '@/components/Dashboard/Automeall'
 
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <Automeall/>
     </div>
   )
 }

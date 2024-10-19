@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
+import Intell from '@/components/Dashboard/Intell'
 
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <Intell/>
     </div>
   )
 }

@@ -32,6 +32,7 @@ const Login = () => {
     
             // 假设后端返回 { "status": "success" } 表示登录成功
             if (response.ok && result.status === 'success') {
+                localStorage.setItem('username', result.data.username);
                 // 登录成功，重定向到 dashboard 页面
                 router.push('/dashboard');
             } else {

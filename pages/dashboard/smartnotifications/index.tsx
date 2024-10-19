@@ -1,10 +1,9 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
-
+import Smartnotifiy from '@/components/Dashboard/SmartNotifications'
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <Smartnotifiy/>
     </div>
   )
 }

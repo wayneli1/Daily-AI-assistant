@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
+import DashboardContent from '@/components/Dashboard/DashboardContent/index.'
 
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <DashboardContent/>
     </div>
   )
 }

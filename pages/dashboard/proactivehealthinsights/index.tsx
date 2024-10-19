@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from '@/components/Dashboard'
+import Proactive from '@/components/Dashboard/Proactive'
 
 const index = () => {
   return (
     <div>
-        <Dashboard/>
+        <Proactive/>
     </div>
   )
 }

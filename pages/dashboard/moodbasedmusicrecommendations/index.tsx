@@ -1,9 +1,11 @@
-import Login from '@/components/Login'
 import React from 'react'
+import Mood from '@/components/Dashboard/Mood'
 
 const index = () => {
   return (
-    <Login/>
+    <div>
+        <Mood/>
+    </div>
   )
 }
 
