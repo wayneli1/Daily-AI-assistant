@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '@/components/SideBar';
 import ShowUser from '@/components/ShowUser'; // 导入 ShowUser 组件
+import Chatbot from '@/components/Chatbot';
 
 const Aichat = () => {
   return (
@@ -18,8 +19,8 @@ const Aichat = () => {
 
         {/* 内容部分 */}
         <div className="p-4">
-          <h1 className="text-2xl font-bold">Ai chat</h1>
-          <p>chat</p>
+          <Chatbot/>
+          
         </div>
       </div>
     </div>
