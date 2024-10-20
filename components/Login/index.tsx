@@ -33,7 +33,7 @@ const Login = () => {
 
 if (result.message === 'ok' && result.code == '0') {
     // 使用 userAccount 代替 userName
-    localStorage.setItem('userAccount', result.data.userAccount); // 使用 'userAccount' 存储
+    localStorage.setItem('userName', result.data.userName); // 使用 'userAccount' 存储
     console.log('Result data:', result.data); 
     
     router.push('/dashboard');

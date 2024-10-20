@@ -1,4 +1,3 @@
-// components/LogoutButton.tsx
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -13,17 +12,15 @@ const LogoutButton: React.FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // 如果有需要发送的数据，也可以在 body 中传递
-        body: JSON.stringify({}),
+        body: JSON.stringify({}), // 传递空 body
       });
 
       if (response.ok) {
-        // API 调用成功后，清除本地存储中的用户数据
-        localStorage.removeItem('username');
-        
+        // 清除登录时存储的用户信息
+        localStorage.removeItem('userName'); // 确保移除的是 userName
 
         // 重定向到首页
-        window.alert('you log out!!')
+        window.alert('You have successfully logged out!');
         router.push('/');
       } else {
         console.error('Logout failed:', await response.json());
