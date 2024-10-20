@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const ShowUser: React.FC = () => {
-  const [username, setUsername] = useState<string | null>(null);
+  const [userAccount, setUserAccount] = useState<string | null>(null);
   const router = useRouter();
 
-  /**useEffect(() => {
-    // 从 localStorage 中获取用户名
-    const storedUsername = localStorage.getItem('username');
-    if (!storedUsername) {
-      // 如果没有用户名，重定向到登录页面
-      window.alert('please login first！')
+  useEffect(() => {
+    // 从 localStorage 中获取 userAccount
+    const storedUserAccount = localStorage.getItem('userAccount');
+    if (!storedUserAccount) {
+      // 如果没有 userAccount，重定向到登录页面
+      window.alert('Please login first!');
       router.push('/login');
     } else {
-      setUsername(storedUsername);
+      setUserAccount(storedUserAccount);
     }
-  }, [router]); /** */
+  }, [router]);
 
   return (
     <div>
-      {/* 如果用户名存在，显示用户名 */}
-      {username ? <span>Welcome, {username}!</span> : null}
+      {/* 如果 userAccount 存在，显示用户信息 */}
+      {userAccount ? <span>Welcome, {userAccount}!</span> : null}
     </div>
   );
 };

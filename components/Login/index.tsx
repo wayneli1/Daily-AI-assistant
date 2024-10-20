@@ -29,16 +29,18 @@ const Login = () => {
             });
     
             const result = await response.json();
+            console.log(result); // 输出返回的所有数据
+
+if (result.message === 'ok' && result.code == '0') {
+    // 使用 userAccount 代替 userName
+    localStorage.setItem('userAccount', result.data.userAccount); // 使用 'userAccount' 存储
+    console.log('Result data:', result.data); 
     
-            // 假设后端返回 { "status": "success" } 表示登录成功
-            if (response.ok && result.status === 'success') {
-                localStorage.setItem('username', result.data.username);
-                // 登录成功，重定向到 dashboard 页面
-                router.push('/dashboard');
-            } else {
-                // 登录失败，显示错误信息
-                setMessage(result.message || 'Login failed');
-            }
+    router.push('/dashboard');
+} else {
+    setMessage(result.message || 'Login failed');
+}
+
         } catch (error) {
             console.error('Error:', error);
             setMessage('An error occurred. Please try again later.');
