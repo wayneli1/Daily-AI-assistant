@@ -18,6 +18,7 @@ const LogoutButton: React.FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
       if (response.ok) {
         // 清除登录时存储的用户信息
         localStorage.removeItem('userName'); // 确保移除的是 userName
+        localStorage.removeItem('userAvatar')
 
         // 重定向到首页
         window.alert('You have successfully logged out!');

@@ -52,6 +52,14 @@ const Sidebar = () => {
           <i className="fas fa-home mr-3"></i>
           <span className={`${isCollapsed ? 'hidden' : 'block'}`}>Home</span>
         </li>
+        <li className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => handleClick('timemanagement')}>
+          <i className="fas fa-clock mr-3"></i>
+          <span className={`${isCollapsed ? 'hidden' : 'block'}`}>Automatic Time Management</span>
+        </li>
+        <li className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => handleClick('settings')}>
+          <i className="fas fa-cog mr-3"></i>
+          <span className={`${isCollapsed ? 'hidden' : 'block'}`}>Settings</span>
+        </li>
 
         {/* Logout */}
         <LogoutButton isCollapsed={isCollapsed} />
