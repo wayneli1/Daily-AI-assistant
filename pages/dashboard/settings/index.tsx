@@ -14,7 +14,7 @@ const settings = () => {
       {/* 右侧内容区域 */}
       <div className="flex-grow">
         {/* Header 显示用户名 */}
-        <header className="flex justify-between p-4 bg-gray-800 text-white">
+        <header >
           <ShowUser />
         </header>
 
