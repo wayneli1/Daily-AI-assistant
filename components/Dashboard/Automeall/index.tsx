@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '@/components/SideBar';
 import ShowUser from '@/components/ShowUser'; // 导入 ShowUser 组件
+import Getreport from '@/components/Getreport';
 
 const Automeal = () => {
   return (
@@ -18,8 +19,7 @@ const Automeal = () => {
 
         {/* 内容部分 */}
         <div className="p-4">
-          <h1 className="text-2xl font-bold">meal Content</h1>
-          <p>meal</p>
+          <Getreport/>
         </div>
       </div>
     </div>

@@ -31,15 +31,25 @@ const Login = () => {
             const result = await response.json();
             console.log(result); // 输出返回的所有数据
 
-if (result.message === 'ok' && result.code == '0') {
-    // 使用 userAccount 代替 userName
-    localStorage.setItem('userName', result.data.userName); // 使用 'userAccount' 存储
-    console.log('Result data:', result.data); 
-    
-    router.push('/dashboard');
-} else {
-    setMessage(result.message || 'Login failed');
-}
+            if (result.message === 'ok' && result.code == '0') {
+                // 存储 userName
+                localStorage.setItem('userName', result.data.userName);
+                // 存储用户的 id
+                localStorage.setItem('id', result.data.id);  
+                // 存储用户头像 userAvatar
+                localStorage.setItem('userAvatar', result.data.userAvatar || '');
+                // 存储用户角色 userRole
+                localStorage.setItem('userRole', result.data.userRole || 'user');  // 设置默认角色为 'user'
+                
+                console.log('Stored userName:', localStorage.getItem('userName'));
+    console.log('Stored userId:', localStorage.getItem('userId'));
+    console.log('Stored userAvatar:', localStorage.getItem('userAvatar'));
+    console.log('Stored userRole:', localStorage.getItem('userRole')); 
+                
+                router.push('/dashboard');
+            } else {
+                setMessage(result.message || 'Login failed');
+            }
 
         } catch (error) {
             console.error('Error:', error);
