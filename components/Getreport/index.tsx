@@ -12,7 +12,7 @@ const Getreport = () => {
         const storedUserId = localStorage.getItem('id'); // 获取用户ID
         if (!storedUserId) {
             setMessage('User is not logged in.');
-            router.push('/login'); /// 如果未登录，跳转到登录页面
+            router.push('/login'); // 如果未登录，跳转到登录页面
         } else {
             setUserId(storedUserId);
         }
@@ -34,14 +34,17 @@ const Getreport = () => {
                 }
             });
 
-            const result = await response.json();
+            // 使用 text() 解析响应为文本，而不是 json
+            const result = await response.text();
             console.log(result); // 输出返回的所有数据
 
-            if (result && result.data && result.data.length > 0) {
-                // 假设后端已经生成报告，直接显示
-                setReport(result.data.report);
+            // 假设后端返回的报告是纯文本格式
+            if (result) {
+                // 处理换行符，转换为 <br /> 标签
+                const formattedReport = result.replace(/\n/g, '<br />');
+                setReport(formattedReport); // 显示格式化的报告内容
             } else {
-                setMessage('please wear equipment');
+                setMessage('Please wear equipment.');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -51,7 +54,7 @@ const Getreport = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/bg2.png')" }}>
-            <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-8 w-96">
+            <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-8 w-1/2"> {/* 修改宽度为 1/2 屏幕宽度 */}
                 <h1 className="text-3xl font-semibold text-white mb-6 text-center">Generate Body Data Report</h1>
                 
                 <form onSubmit={handleGenerateReport}>
@@ -59,7 +62,7 @@ const Getreport = () => {
                         Generate Report
                     </button>
                     {message && <p className="text-white text-center mt-4">{message}</p>}
-                    {report && <div className="mt-6 text-white">{report}</div>}
+                    {report && <div className="mt-6 text-white" dangerouslySetInnerHTML={{ __html: report }}></div>}
                 </form>
             </div>
         </div>
