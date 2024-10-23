@@ -12,7 +12,7 @@ const Getreport = () => {
         const storedUserId = localStorage.getItem('id'); // 获取用户ID
         if (!storedUserId) {
             setMessage('User is not logged in.');
-            /*router.push('/login'); */// 如果未登录，跳转到登录页面
+            router.push('/login'); /// 如果未登录，跳转到登录页面
         } else {
             setUserId(storedUserId);
         }
@@ -41,7 +41,7 @@ const Getreport = () => {
                 // 假设后端已经生成报告，直接显示
                 setReport(result.data.report);
             } else {
-                setMessage('请佩戴设备');
+                setMessage('please wear equipment');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -50,7 +50,7 @@ const Getreport = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/bg.jpg')" }}>
+        <div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/bg2.png')" }}>
             <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-8 w-96">
                 <h1 className="text-3xl font-semibold text-white mb-6 text-center">Generate Body Data Report</h1>
                 
