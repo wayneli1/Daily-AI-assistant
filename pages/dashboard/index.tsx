@@ -1,9 +1,12 @@
 import React from 'react'
+import Dashboard from '@/components/Dashboard'
 
-const  dashboard = () => {
+const index = () => {
   return (
-    <div>  dashboard</div>
+    <div>
+        <Dashboard/>
+    </div>
   )
 }
 
-export default  dashboard
+export default index

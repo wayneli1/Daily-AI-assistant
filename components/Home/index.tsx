@@ -14,7 +14,7 @@ const Home= () => {
                     </ul>
                 </nav>
             </header>
-
+            <hr className='bg-gray-200 w-auto mx-auto'/>
             {/* Main Section */}
             <main className="flex mt-12">
                 {/* Left Section */}
