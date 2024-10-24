@@ -132,76 +132,78 @@ const Setting = () => {
                 <title>Profile Page</title>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
             </Head>
-            <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-md">
-                <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-                <p className="text-gray-600 mb-6">You can update your profile information below.</p>
+            <div className="min-h-screen bg-gradient-to-b from-blue-50 to-purple-100 flex items-center justify-center"> {/* 与 Getreport 保持一致 */}
+                <div className="max-w-3xl w-full bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-12 shadow-lg"> {/* 宽度设为 max-w-3xl */}
+                    <h2 className="text-3xl font-semibold text-[#1a1a1a] mb-6">Profile</h2>
+                    <p className="text-gray-600 mb-6">You can update your profile information below.</p>
 
-                {/* 显示用户的 ID */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">User ID</label>
-                    <input
-                        type="text"
-                        value={userData.id} // 显示用户的 id
-                        className="w-full border border-gray-300 rounded-md p-2"
-                        readOnly
-                    />
-                </div>
-                
-                {/* 可修改的用户名 */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
-                    <input
-                        type="text"
-                        value={userData.userName}
-                        onChange={(e) => setUserData({ ...userData, userName: e.target.value })}
-                        className="w-full border border-gray-300 rounded-md p-2"
-                    />
-                </div>
-                
-                {/* 可修改的个人简介 */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">About</label>
-                    <textarea
-                        className="w-full border border-gray-300 rounded-md p-2 h-24"
-                        value={userData.userProfile}
-                        onChange={(e) => setUserData({ ...userData, userProfile: e.target.value })}
-                    />
-                </div>
-
-                {/* 修改头像 */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Photo</label>
-                    <div className="flex items-center">
-                        {userData.userAvatar ? (
-                            <img
-                                src={userData.userAvatar}
-                                alt="User Avatar"
-                                className="w-12 h-12 rounded-full mr-4"
-                            />
-                        ) : (
-                            <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
-                                <i className="fas fa-user text-gray-400 text-2xl"></i>
-                            </div>
-                        )}
-                        <label className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md cursor-pointer">
-                            Change
-                            <input
-                                type="file"
-                                className="hidden"
-                                onChange={handleChangeAvatar} // 上传新头像
-                            />
-                        </label>
+                    {/* 显示用户的 ID */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">User ID</label>
+                        <input
+                            type="text"
+                            value={userData.id} // 显示用户的 id
+                            className="w-full border border-gray-300 rounded-md p-2 bg-white bg-opacity-80"
+                            readOnly
+                        />
                     </div>
+                    
+                    {/* 可修改的用户名 */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input
+                            type="text"
+                            value={userData.userName}
+                            onChange={(e) => setUserData({ ...userData, userName: e.target.value })}
+                            className="w-full border border-gray-300 rounded-md p-2 bg-white bg-opacity-80"
+                        />
+                    </div>
+                    
+                    {/* 可修改的个人简介 */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">About</label>
+                        <textarea
+                            className="w-full border border-gray-300 rounded-md p-2 h-24 bg-white bg-opacity-80"
+                            value={userData.userProfile}
+                            onChange={(e) => setUserData({ ...userData, userProfile: e.target.value })}
+                        />
+                    </div>
+
+                    {/* 修改头像 */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Photo</label>
+                        <div className="flex items-center">
+                            {userData.userAvatar ? (
+                                <img
+                                    src={userData.userAvatar}
+                                    alt="User Avatar"
+                                    className="w-12 h-12 rounded-full mr-4"
+                                />
+                            ) : (
+                                <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center mr-4">
+                                    <i className="fas fa-user text-gray-400 text-2xl"></i>
+                                </div>
+                            )}
+                            <label className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md cursor-pointer">
+                                Change
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    onChange={handleChangeAvatar} // 上传新头像
+                                />
+                            </label>
+                        </div>
+                    </div>
+
+                    <button
+                        className="w-full bg-[#1a1a1a] text-white py-3 rounded-lg hover:bg-opacity-90 transition duration-300"
+                        onClick={handleSaveChanges} // 保存更改
+                    >
+                        Save Changes
+                    </button>
+
+                    {message && <p className="text-green-500 text-center mt-4">{message}</p>}
                 </div>
-
-                <button
-                    className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-                    onClick={handleSaveChanges} // 保存更改
-                >
-                    Save Changes
-                </button>
-
-                {message && <p className="text-green-500 text-center mt-4">{message}</p>}
             </div>
         </>
     );
