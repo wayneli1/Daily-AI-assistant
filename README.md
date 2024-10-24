@@ -1,41 +1,28 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Smart Daily Management Assistant
+Welcome to the Smart Daily Management Assistant, a web application built with Next.js and Spring Boot. This platform integrates OpenAI's large language model (LLM) to provide users with a variety of smart features designed to enhance daily management and well-being.
 
-## Getting Started
+Features
+Automatic Meal and Diet Planning: Generate personalized meal plans based on user preferences and dietary needs.
+Smart Notifications: Receive timely reminders and alerts to keep you on track with your daily tasks and goals.
+Mood-Based Music Recommendations: Enjoy music playlists curated by AI based on your selected mood.
+Getting Started
+To set up the project locally, follow these steps:
 
-First, run the development server:
+Clone the repository:
 
-```bash
+bash
+Copy code
+git clone <repository-url>
+cd <project-directory>
+Install dependencies:
+
+bash
+Copy code
+npm install
+Run the application:
+
+bash
+Copy code
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open your browser and navigate to http://localhost:3000 to view the application.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# 5620
-Smart-Personal-Assistant-with-LLM Private
->>>>>>> 5a5af5607a5f2266bd3c46be8bf417219e26370b
