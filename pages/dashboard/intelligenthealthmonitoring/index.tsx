@@ -1,12 +1,12 @@
 import React from 'react'
-import Intell from '@/components/Dashboard/Intell'
+import HealthMonitoring from '@/components/Dashboard/Intell'
 
 const index = () => {
-  return (
-    <div>
-        <Intell/>
-    </div>
-  )
+    return (
+        <div>
+            <HealthMonitoring/>
+        </div>
+    )
 }
 
 export default index
