@@ -84,7 +84,7 @@ const RecommendMood = () => {
     };
 
     return (
-        <div className="flex h-screen"> {/* 使用 flex 布局，确保覆盖全屏 */}
+        <div className="flex min-h-screen"> {/* 使用 flex 布局，确保覆盖全屏 */}
           
             {/* Sidebar 始终在左侧 */}
             <Sidebar />

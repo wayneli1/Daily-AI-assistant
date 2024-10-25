@@ -12,7 +12,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`h-screen bg-white p-4 shadow-md ${isCollapsed ? 'w-16' : 'w-64'} transition-width duration-300`}>
+    <div className={`fixed h-screen bg-white p-4 shadow-md ${isCollapsed ? 'w-16' : 'w-64'} transition-width duration-300`}>
       <div className="flex justify-between items-center mb-6">
         <h2 className={`text-xl font-bold ${isCollapsed ? 'hidden' : 'block'}`}>Sidebar</h2>
         <button onClick={() => setIsCollapsed(!isCollapsed)} className="focus:outline-none">
