@@ -104,6 +104,7 @@ const Setting = () => {
                 setPreviewAvatar(null);
                 setNewAvatar(null);
                 setMessage('Avatar updated successfully');
+                localStorage.setItem('userAvatar', result.data);
             } else {
                 setMessage('Failed to update avatar');
             }
@@ -151,6 +152,7 @@ const Setting = () => {
                             value={userData.userName}
                             onChange={(e) => setUserData({ ...userData, userName: e.target.value })}
                             className="w-full border border-gray-300 rounded-md p-2 bg-white bg-opacity-80"
+                            readOnly
                         />
                     </div>
                     
@@ -160,6 +162,7 @@ const Setting = () => {
                             className="w-full border border-gray-300 rounded-md p-2 h-24 bg-white bg-opacity-80"
                             value={userData.userProfile}
                             onChange={(e) => setUserData({ ...userData, userProfile: e.target.value })}
+                            readOnly
                         />
                     </div>
 

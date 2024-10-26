@@ -22,7 +22,7 @@ const Sidebar = () => {
       <ul>
         <li className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => handleClick('dashboard')}>
           <i className="fas fa-tachometer-alt mr-3"></i>
-          <span className={`${isCollapsed ? 'hidden' : 'block'}`}>Dashboard</span>
+          <span className={`${isCollapsed ? 'hidden' : 'block'}`}>Admin Dashboard</span>
         </li>
         <li className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => handleClick('automaticmealanddietplanning')}>
           <i className="fas fa-utensils mr-3"></i>
