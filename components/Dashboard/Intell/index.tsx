@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Line, Doughnut } from 'react-chartjs-2';
 import ShowUser from '@/components/ShowUser';
 import Sidebar from '@/components/SideBar';
+import ReactMarkdown from 'react-markdown';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -15,11 +16,9 @@ import {
     Legend,
 } from 'chart.js';
 
-// Manually register necessary components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const HealthMonitoring: React.FC = () => {
-    // States to store data fetched from API
     const [heartRateData, setHeartRateData] = useState<number[]>([]);
     const [averageHeartRate, setAverageHeartRate] = useState<number | null>(null);
     const [stepsPerMinute, setStepsPerMinute] = useState<number | null>(null);
@@ -29,15 +28,16 @@ const HealthMonitoring: React.FC = () => {
     const [remSleep, setRemSleep] = useState<number | null>(null);
     const [caloriesBurned, setCaloriesBurned] = useState<number | null>(null);
     const [doctorName, setDoctorName] = useState<string>('');
+    const [healthReport, setHealthReport] = useState<string>('');
+    const [loading, setLoading] = useState(false);
+    const userId = 1; // Replace with actual user ID
 
-    // Use useEffect to fetch data from API on component mount
     useEffect(() => {
-        // Replace with your API endpoint
-        axios.get('http://localhost:8101/api/healthData/get?userId=1')
+        axios.get(`http://localhost:8101/api/healthData/get?userId=${userId}`)
             .then(response => {
-                const data = response.data.data; // Update to access data inside 'data'
+                const data = response.data.data;
                 if (data) {
-                    setHeartRateData(data.heartRate.split(',').map(Number)); // Convert heartRate to array of numbers
+                    setHeartRateData(data.heartRate.split(',').map(Number));
                     setAverageHeartRate(data.averageHeartRate);
                     setStepsPerMinute(data.stepsPerMinute);
                     setSleepTime(data.sleepTime);
@@ -52,6 +52,19 @@ const HealthMonitoring: React.FC = () => {
                 console.error("Error fetching health data: ", error);
             });
     }, []);
+
+    const handleGenerateHealthReport = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`http://localhost:8101/api/healthData/generate-health-report/${userId}`);
+            setHealthReport(response.data); // Assume response is Markdown text
+        } catch (error) {
+            console.error("Error generating health report: ", error);
+            setHealthReport("An error occurred while generating the health report.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const heartRateChartData = {
         labels: ['1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s', '9s', '10s'],
@@ -72,7 +85,7 @@ const HealthMonitoring: React.FC = () => {
         datasets: [
             {
                 label: 'Sleep Quality',
-                data: [deepSleep, lightSleep, remSleep], // Dynamic data from state
+                data: [deepSleep, lightSleep, remSleep],
                 backgroundColor: ['#0e5fd9', '#ff9400', '#e84545'],
             },
         ],
@@ -80,137 +93,69 @@ const HealthMonitoring: React.FC = () => {
 
     return (
         <div className="flex h-screen bg-gray-100">
-            <Sidebar className="w-64" /> {/* 为侧边栏设置固定宽度 */}
-
-            {/* 右侧内容区域 */}
-            <div className="flex-grow ml-64"> {/* 设置margin-left，以避免覆盖 */}
-                {/* Header 显示用户名 */}
-                <header
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 flex justify-between items-center">
+            <Sidebar className="w-64" />
+            <div className="flex-grow ml-64">
+                <header className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 flex justify-between items-center">
                     <h1 className="text-2xl font-semibold">Dashboard</h1>
-                    <ShowUser/>
+                    <ShowUser />
                 </header>
-
-                {/* 页面内容 */}
                 <div className="w-full h-auto p-10 bg-[#fef7ff]">
-                    {/* Title and welcome message */}
                     <div className="text-center mb-10">
                         <h1 className="text-5xl font-bold mb-4">Intelligent Health Monitoring</h1>
                         <p className="text-lg">
-                            Welcome to your health dashboard. View vital signs, generate health reports, and get
-                            medication reminders set by your doctor.
-                            Stay informed and manage your health easily.
+                            Welcome to your health dashboard. View vital signs, generate health reports, and get medication reminders set by your doctor.
                         </p>
                     </div>
-
-                    {/* Buttons for returning and new users */}
-                    <div className="flex justify-center space-x-4 mb-10">
-                        <button className="px-6 py-2 bg-[#d0bcff] text-lg rounded-full">Returning User</button>
-                        <button className="px-6 py-2 border-2 border-[#d0bcff] text-lg rounded-full">New User</button>
-                    </div>
-
-                    {/* Grid layout - divided into three sections */}
                     <div className="grid grid-cols-3 gap-8">
-                        {/* Left side: Cards and line chart */}
                         <div className="col-span-1">
-                            {/* Heart rate card */}
                             <div className="bg-white p-6 rounded-lg shadow mb-6">
                                 <h2 className="text-xl font-semibold">Heart Rate</h2>
                                 <p className="text-4xl font-bold">{averageHeartRate} BPM</p>
                                 <p className="text-green-500">6.7% Increase</p>
                             </div>
-
-                            {/* Steps per minute card */}
                             <div className="bg-white p-6 rounded-lg shadow mb-6">
                                 <h2 className="text-xl font-semibold">Steps Per Minute</h2>
                                 <p className="text-4xl font-bold">{stepsPerMinute} Steps/Minute</p>
                                 <p className="text-red-500">13.5% Decrease</p>
                             </div>
-
-                            {/* Line chart */}
-                            <div className="bg-white p-6 rounded-lg shadow" style={{height: '800px'}}>
+                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '600px'}} >
                                 <h2 className="text-xl font-semibold mb-4">Heart Rate Chart</h2>
-                                <Line
-                                    data={heartRateChartData}
-                                    options={{
-                                        maintainAspectRatio: false,
-                                        scales: {
-                                            y: {
-                                                min: 65,  // Minimum 65 BPM
-                                                max: 75  // Maximum 75 BPM
-                                            }
-                                        }
-                                    }}
-                                />
+                                <Line data={heartRateChartData} options={{ maintainAspectRatio: false, scales: { y: { min: 65, max: 75 }}}} />
+                            </div>
+                            {/* Buttons */}
+                            <div className="flex space-x-4 mb-6">
+                                <button
+                                    className="flex-1 h-full aspect-square bg-[#d0bcff] text-lg rounded-full flex items-center justify-center">
+                                    Medicine Plan
+                                </button>
+                                <button
+                                    className="flex-1 h-full aspect-square bg-[#d0bcff] text-lg rounded-full flex items-center justify-center">
+                                    Doctor: {doctorName}
+                                </button>
                             </div>
                         </div>
-
-                        {/* Middle section: Cards and doughnut chart */}
                         <div className="col-span-1">
-                            {/* Sleep time card */}
                             <div className="bg-white p-6 rounded-lg shadow mb-6">
                                 <h2 className="text-xl font-semibold">Sleep Time</h2>
                                 <p className="text-4xl font-bold">{sleepTime} hours/day</p>
                                 <p className="text-green-500">6.7% Increase</p>
                             </div>
-
-                            {/* Calories burned card */}
                             <div className="bg-white p-6 rounded-lg shadow mb-6">
                                 <h2 className="text-xl font-semibold">Calories Burned</h2>
                                 <p className="text-4xl font-bold">{caloriesBurned} Calories</p>
                                 <p className="text-green-500">1.7% Increase</p>
                             </div>
-
-                            {/* Doughnut chart */}
-                            <div className="bg-white p-6 rounded-lg shadow" style={{height: '800px'}}>
+                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '600px'}}>
                                 <h2 className="text-xl font-semibold">Sleep Quality</h2>
-                                <Doughnut data={sleepQualityData}/>
+                                <Doughnut data={sleepQualityData} />
                                 <div className="flex justify-between mt-4">
                                     <p>Deep Sleep: {deepSleep}%</p>
                                     <p>Light Sleep: {lightSleep}%</p>
                                     <p>REM Sleep: {remSleep}%</p>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Right side: Health report */}
-                        <div className="col-span-1 space-y-6"> {/* Note: Using space-y-6 to separate each section */}
-                            <div className="bg-white p-6 rounded-lg shadow">
-                                <h2 className="text-xl font-semibold">Health Report</h2>
-                                <div className="flex space-x-4 mt-4">
-                                    <img src="/HealthReport.png" alt="Health Report" className="w-12 h-12"/>
-                                    <div>
-                                        <p className="text-xl">
-                                            Based on the recent health monitoring data, your average heart rate
-                                            is {averageHeartRate} BPM, which
-                                            shows a 6.7% increase. Your sleep quality indicates that you have sufficient
-                                            deep
-                                            sleep ({deepSleep}%), but the light sleep ({lightSleep}%) could be improved.
-                                            Your physical activity
-                                            level, as measured by steps per minute, has slightly decreased by 13.5%, and
-                                            calories burned are stable at {caloriesBurned} calories per day. Overall,
-                                            your health status
-                                            score is excellent at 97, but maintaining consistent activity levels and
-                                            improving
-                                            sleep efficiency is recommended for optimal health.
-                                        </p>
-                                    </div>
-                                </div>
-                                <p className="mt-4">Health Status Score: <span className="font-bold text-xl">97</span>
-                                </p>
-                            </div>
-
-                            {/* Buttons */}
-                            <div className="flex space-x-4">
-                                <button className="flex-1 px-6 py-2 bg-[#d0bcff] text-lg rounded-full">Medicine Plan
-                                </button>
-                                <button className="flex-1 px-6 py-2 bg-[#d0bcff] text-lg rounded-full">
-                                    Doctor: {doctorName} {/* Dynamic doctor name */}
-                                </button>
-                            </div>
-
                             {/* Medicine Intake Plan */}
-                            <div className="bg-white p-6 rounded-lg shadow">
+                            <div className="bg-white p-6 rounded-lg shadow mb-6">
                                 <h2 className="text-xl font-semibold">Medicine Intake Plan</h2>
                                 <div className="space-y-2 mt-4">
                                     {[...Array(3)].map((_, index) => (
@@ -219,6 +164,26 @@ const HealthMonitoring: React.FC = () => {
                                             <p>Medicine Name / Times / Alerts</p>
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-span-1 space-y-6">
+                            <div className="bg-white p-6 rounded-lg shadow">
+                                <h2 className="text-xl font-semibold">Health Report</h2>
+                                <div className="flex space-x-4 mt-4">
+                                    <img
+                                        src="/HealthReport.png"
+                                        alt="Health Report"
+                                        className="w-12 h-12 cursor-pointer"
+                                        onClick={handleGenerateHealthReport}
+                                    />
+                                    <div>
+                                        {loading ? (
+                                            <p className="text-xl">Generating report...</p>
+                                        ) : (
+                                            <ReactMarkdown className="text-xl" children={healthReport} />
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
