@@ -64,7 +64,7 @@ const Getreport = () => {
                 <h1 className="text-[#1a1a1a] text-6xl font-bold mb-6 leading-tight">
                 Automatic Meal and Diet Planning
                     <br />
-                    Diet Planning
+                    
                 </h1>
 
                 <p className="text-gray-600 text-xl mb-12 max-w-3xl mx-auto">
