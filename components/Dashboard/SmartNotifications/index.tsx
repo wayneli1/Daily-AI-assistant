@@ -1,10 +1,10 @@
-import React from 'react'
-import ShowUser from '@/components/ShowUser'
-import Sidebar from '@/components/SideBar'
+import React from 'react';
+import Sidebar from '@/components/SideBar';
+import ShowUser from '@/components/ShowUser'; // 导入 ShowUser 组件
+import ShowNotify from '../Shownotify';
 
-const Smartnotifiy = () => {
+const index = () => {
   return (
-    
     <div className="flex h-screen"> {/* 使用 flex 布局 */}
       
       {/* Sidebar 始终在左侧 */}
@@ -18,13 +18,13 @@ const Smartnotifiy = () => {
         </header>
 
         {/* 内容部分 */}
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">smart Content</h1>
-          <p>123455643663</p>
+        <div >
+          <ShowNotify/>
+          
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Smartnotifiy
+export default index;

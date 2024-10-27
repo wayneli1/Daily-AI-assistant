@@ -15,32 +15,15 @@ const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Check login status before fetching the user list
-  const checkLoginStatus = async () => {
-    try {
-      const response = await fetch('http://localhost:8101/api/user/get/login', {
-        method: 'GET',
-        credentials: 'include', // 确保携带 Cookie 信息
-      });
-
-      const result = await response.json();
-      console.log('Login check result:', result); // 调试：查看登录状态
-
-      if (result.code === 0 && result.data) {
-        // 如果登录成功，继续获取用户列表
-        fetchUsers();
-      } else {
-        alert('You are not logged in. Redirecting to login page.');
-        router.push('/login'); // 重定向到登录页面
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error checking login status:', error.message);
-      } else {
-        console.error('An unknown error occurred while checking login status:', error);
-      }
-      alert('Error checking login status. Please try again.');
-      router.push('/login');
+  // Check user role from localStorage
+  const checkUserRole = () => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole !== 'admin') {
+      alert('You are not authorized to access this page. Redirecting to the dashboard.');
+      router.push('/dashboard');
+    } else {
+      // 如果是 admin，则继续获取用户列表
+      fetchUsers();
     }
   };
 
@@ -87,9 +70,9 @@ const UserList: React.FC = () => {
     }
   };
 
-  // Check if the user is logged in and then fetch the user list
+  // Check user role on component mount
   useEffect(() => {
-    checkLoginStatus();
+    checkUserRole();
   }, [router]);
 
   // Delete user
@@ -126,7 +109,7 @@ const UserList: React.FC = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-gradient-to-b from-blue-50 to-purple-100">
       <h1 className="text-2xl font-semibold mb-6">User List</h1>
       {loading ? (
         <p>Loading...</p>
