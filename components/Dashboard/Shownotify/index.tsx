@@ -59,7 +59,7 @@ const ShowNotify: React.FC = () => {
   }, [notifications]);
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
+    <div className="max-w-3xl mx-auto p-6 space-y-6 bg-gradient-to-b from-blue-50 to-purple-100">
       <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
         Notifications
       </h1>

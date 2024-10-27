@@ -109,7 +109,7 @@ const UserList: React.FC = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 bg-gradient-to-b from-blue-50 to-purple-100">
       <h1 className="text-2xl font-semibold mb-6">User List</h1>
       {loading ? (
         <p>Loading...</p>
