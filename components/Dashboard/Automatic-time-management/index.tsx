@@ -1,30 +1,28 @@
-import React from 'react'
-import ShowUser from '@/components/ShowUser'
-import Sidebar from '@/components/SideBar'
+import React from 'react';
+import Sidebar from '@/components/SideBar';
+import ShowUser from '@/components/ShowUser'; 
+import AutomaticTimeManage from '@/components/AutomaticTimeManage';
 
-const Timemanage = () => {
+const AutomaticTimeManagement = () => {
   return (
-    
-    <div className="flex h-screen"> {/* 使用 flex 布局 */}
-      
-      {/* Sidebar 始终在左侧 */}
+    <div className="flex h-screen">
+      {/* Sidebar 保持不变 */}
       <Sidebar />
 
       {/* 右侧内容区域 */}
       <div className="flex-grow">
         {/* Header 显示用户名 */}
-        <header >
+        <header>
           <ShowUser />
         </header>
 
         {/* 内容部分 */}
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">Content</h1>
-          <p>123455643663</p>
+        <div>
+          <AutomaticTimeManage />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Timemanage
+export default AutomaticTimeManagement;
