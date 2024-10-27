@@ -1,12 +1,12 @@
-import React from 'react'
-import Proactive from '@/components/Dashboard/Proactive'
+import React from 'react';
+import Proactive from '@/components/Dashboard/Proactive';
 
-const index = () => {
-  return (
-    <div>
-        <Proactive/>
-    </div>
-  )
+const ProactiveHealthInsights: React.FC = () => {
+    return (
+        <div>
+            <Proactive />
+        </div>
+    );
 }
 
-export default index
+export default ProactiveHealthInsights;

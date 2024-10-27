@@ -4,6 +4,7 @@ import { Line, Doughnut } from 'react-chartjs-2';
 import ShowUser from '@/components/ShowUser';
 import Sidebar from '@/components/SideBar';
 import ReactMarkdown from 'react-markdown';
+import { useRouter } from 'next/router';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -19,6 +20,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const HealthMonitoring: React.FC = () => {
+    const [userId, setUserId] = useState<string | null>(null); // 用于存储用户ID
     const [heartRateData, setHeartRateData] = useState<number[]>([]);
     const [averageHeartRate, setAverageHeartRate] = useState<number | null>(null);
     const [stepsPerMinute, setStepsPerMinute] = useState<number | null>(null);
@@ -30,34 +32,48 @@ const HealthMonitoring: React.FC = () => {
     const [doctorName, setDoctorName] = useState<string>('');
     const [healthReport, setHealthReport] = useState<string>('');
     const [loading, setLoading] = useState(false);
-    const userId = 1; // Replace with actual user ID
+    const router = useRouter();
+
+    // 在页面加载时获取用户的ID
+    useEffect(() => {
+        const storedUserId = localStorage.getItem('id'); // 从 localStorage 获取用户ID
+        if (!storedUserId) {
+            router.push('/login'); // 如果未登录，跳转到登录页面
+        } else {
+            setUserId(storedUserId); // 设置用户ID
+        }
+    }, [router]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8101/api/healthData/get?userId=${userId}`)
-            .then(response => {
-                const data = response.data.data;
-                if (data) {
-                    setHeartRateData(data.heartRate.split(',').map(Number));
-                    setAverageHeartRate(data.averageHeartRate);
-                    setStepsPerMinute(data.stepsPerMinute);
-                    setSleepTime(data.sleepTime);
-                    setDeepSleep(data.deepSleep);
-                    setLightSleep(data.lightSleep);
-                    setRemSleep(data.remSleep);
-                    setCaloriesBurned(data.caloriesBurned);
-                    setDoctorName(data.doctorName);
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching health data: ", error);
-            });
-    }, []);
+        if (userId) {
+            axios.get(`http://localhost:8101/api/healthData/get?userId=${userId}`)
+                .then(response => {
+                    const data = response.data.data;
+                    if (data) {
+                        setHeartRateData(data.heartRate.split(',').map(Number));
+                        setAverageHeartRate(data.averageHeartRate);
+                        setStepsPerMinute(data.stepsPerMinute);
+                        setSleepTime(data.sleepTime);
+                        setDeepSleep(data.deepSleep);
+                        setLightSleep(data.lightSleep);
+                        setRemSleep(data.remSleep);
+                        setCaloriesBurned(data.caloriesBurned);
+                        setDoctorName(data.doctorName);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching health data: ", error);
+                });
+        }
+    }, [userId]);
 
     const handleGenerateHealthReport = async () => {
+        if (!userId) return;
+
         setLoading(true);
         try {
             const response = await axios.get(`http://localhost:8101/api/healthData/generate-health-report/${userId}`);
-            setHealthReport(response.data); // Assume response is Markdown text
+            setHealthReport(response.data); // 假设返回的是Markdown格式的文本
         } catch (error) {
             console.error("Error generating health report: ", error);
             setHealthReport("An error occurred while generating the health report.");
@@ -103,7 +119,7 @@ const HealthMonitoring: React.FC = () => {
                     <div className="text-center mb-10">
                         <h1 className="text-5xl font-bold mb-4">Intelligent Health Monitoring</h1>
                         <p className="text-lg">
-                            Welcome to your health dashboard. View vital signs, generate health reports, and get medication reminders set by your doctor.
+                            Welcome to your health dashboard. View vital signs, generate health reports.
                         </p>
                     </div>
                     <div className="grid grid-cols-3 gap-8">
@@ -118,7 +134,7 @@ const HealthMonitoring: React.FC = () => {
                                 <p className="text-4xl font-bold">{stepsPerMinute} Steps/Minute</p>
                                 <p className="text-red-500">13.5% Decrease</p>
                             </div>
-                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '600px'}} >
+                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '500px'}} >
                                 <h2 className="text-xl font-semibold mb-4">Heart Rate Chart</h2>
                                 <Line data={heartRateChartData} options={{ maintainAspectRatio: false, scales: { y: { min: 65, max: 75 }}}} />
                             </div>
@@ -145,7 +161,7 @@ const HealthMonitoring: React.FC = () => {
                                 <p className="text-4xl font-bold">{caloriesBurned} Calories</p>
                                 <p className="text-green-500">1.7% Increase</p>
                             </div>
-                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '600px'}}>
+                            <div className="bg-white p-6 rounded-lg shadow mb-6" style={{height: '500px'}}>
                                 <h2 className="text-xl font-semibold">Sleep Quality</h2>
                                 <Doughnut data={sleepQualityData} />
                                 <div className="flex justify-between mt-4">
