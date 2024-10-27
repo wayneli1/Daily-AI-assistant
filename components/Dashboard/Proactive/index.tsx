@@ -92,13 +92,13 @@ const Proactive: React.FC = () => {
                             className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow-lg text-xl mt-4"
                             onClick={handleGenerateHealthReport}
                         >
-                            Generate Health Report
+                            Generate Health Prediction and Plan
                         </button>
                     </div>
 
                     {/* Right: Full Health Report */}
                     <div className="bg-white p-6 rounded-lg shadow overflow-y-auto">
-                        <h3 className="text-2xl font-semibold mb-4">Health Report</h3>
+                        <h3 className="text-2xl font-semibold mb-4">Health Prediction and Plan</h3>
                         {loading ? <p>Loading...</p> : <ReactMarkdown>{healthReport}</ReactMarkdown>}
                     </div>
                 </div>

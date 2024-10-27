@@ -73,7 +73,8 @@ const HealthMonitoring: React.FC = () => {
         setLoading(true);
         try {
             const response = await axios.get(`http://localhost:8101/api/healthData/generate-health-report/${userId}`);
-            setHealthReport(response.data); // 假设返回的是Markdown格式的文本
+            setHealthReport(String(response.data.data || "No report available."));
+            // 假设返回的是Markdown格式的文本
         } catch (error) {
             console.error("Error generating health report: ", error);
             setHealthReport("An error occurred while generating the health report.");
@@ -197,7 +198,7 @@ const HealthMonitoring: React.FC = () => {
                                         {loading ? (
                                             <p className="text-xl">Generating report...</p>
                                         ) : (
-                                            <ReactMarkdown className="text-xl" children={healthReport} />
+                                            <ReactMarkdown className="text-xl">{healthReport}</ReactMarkdown>
                                         )}
                                     </div>
                                 </div>
